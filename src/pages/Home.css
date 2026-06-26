@@ -1,0 +1,571 @@
+/* Why NKXUS Bento Grid Layout */
+.why-nkxus-section {
+  padding: 120px 24px;
+  background: var(--bg-primary);
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: center;
+}
+
+.why-nkxus-container {
+  width: 100%;
+  max-width: 1100px;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+/* Header */
+.why-header {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.why-badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: var(--text-primary);
+}
+
+.why-badge-line {
+  width: 24px;
+  height: 2px;
+  background-color: var(--text-primary);
+}
+
+.why-title {
+  font-size: 44px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  max-width: 600px;
+  line-height: 1.1;
+}
+
+/* Bento Grid */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+}
+
+/* Base Bento Card */
+.bento-card {
+  padding: 32px;
+  border-radius: 20px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  overflow: hidden;
+  position: relative;
+  transition: var(--transition-smooth);
+}
+
+.bento-card:hover {
+  border-color: var(--border-hover);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px var(--accent-glow);
+}
+
+.bento-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 2;
+  text-align: left;
+}
+
+.bento-label {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.bento-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.bento-desc {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  max-width: 90%;
+}
+
+/* Specific Card Spans */
+.card-scale { grid-column: span 7; }
+.card-security { grid-column: span 5; }
+.card-benchmarks { grid-column: span 12; }
+.card-fullstack { grid-column: span 5; }
+.card-radar { grid-column: span 7; }
+
+/* 1. Scale Telemetry Terminal Widget */
+.telemetry-widget {
+  background: #000000;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 16px;
+  font-family: monospace;
+  font-size: 11px;
+  color: #a1a1aa;
+  height: 140px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: relative;
+  z-index: 2;
+  text-align: left;
+}
+
+.telemetry-line {
+  white-space: nowrap;
+  opacity: 0.85;
+}
+
+.telemetry-success {
+  color: var(--text-primary);
+  font-weight: bold;
+}
+
+.telemetry-glow-dot {
+  width: 6px;
+  height: 6px;
+  background-color: var(--text-primary);
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 10px var(--text-primary);
+  animation: pulse-glow-telemetry 1.5s infinite;
+}
+
+@keyframes pulse-glow-telemetry {
+  0% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.3); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.7; }
+}
+
+/* 2. Security Shield & Scanner Widget */
+.security-widget {
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  position: relative;
+  overflow: hidden;
+  z-index: 2;
+}
+
+.security-scanner-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--text-primary), transparent);
+  animation: scanner-sweep 4s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes scanner-sweep {
+  0% { top: 0%; }
+  50% { top: 100%; }
+  100% { top: 0%; }
+}
+
+.security-shield-svg {
+  animation: shield-pulse 3s ease-in-out infinite;
+}
+
+@keyframes shield-pulse {
+  0% { transform: scale(1); filter: drop-shadow(0 0 0px rgba(255,255,255,0)); opacity: 0.8; }
+  50% { transform: scale(1.06); filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.15)); opacity: 1; }
+  100% { transform: scale(1); filter: drop-shadow(0 0 0px rgba(255,255,255,0)); opacity: 0.8; }
+}
+
+.light-theme .security-shield-svg {
+  animation: shield-pulse-light 3s ease-in-out infinite;
+}
+
+@keyframes shield-pulse-light {
+  0% { transform: scale(1); filter: drop-shadow(0 0 0px rgba(0,0,0,0)); opacity: 0.8; }
+  50% { transform: scale(1.06); filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.08)); opacity: 1; }
+  100% { transform: scale(1); filter: drop-shadow(0 0 0px rgba(0,0,0,0)); opacity: 0.8; }
+}
+
+.security-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  text-align: left;
+}
+
+.security-status-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.security-status-val {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* 3. Circular Benchmarks Speedometer Widget */
+.radial-benchmarks-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  width: 100%;
+}
+
+.radial-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.radial-circle-box {
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+
+.radial-circle-svg {
+  width: 100px;
+  height: 100px;
+  transform: rotate(-90deg);
+}
+
+.radial-bg-circle {
+  fill: none;
+  stroke: var(--border-color);
+  stroke-width: 6px;
+}
+
+.radial-fill-circle {
+  fill: none;
+  stroke-width: 6px;
+  stroke-linecap: round;
+  stroke-dasharray: 283; /* 2 * PI * r (r=45) */
+  stroke-dashoffset: 283; /* Animate dynamically */
+  transition: stroke-dashoffset 1.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s;
+}
+
+.radial-value-display {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-heading);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.radial-label-display {
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--text-secondary);
+  text-align: center;
+  font-weight: 500;
+}
+
+/* 4. Fullstack Synergy Layer Stack */
+.synergy-stack-widget {
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 600px;
+  position: relative;
+}
+
+.synergy-layers-container {
+  position: relative;
+  width: 160px;
+  height: 120px;
+  transform-style: preserve-3d;
+  transform: rotateX(60deg) rotateZ(-30deg);
+  transition: var(--transition-smooth);
+}
+
+.bento-card:hover .synergy-layers-container {
+  transform: rotateX(55deg) rotateZ(-25deg);
+}
+
+.synergy-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--text-primary);
+  transition: var(--transition-smooth);
+  padding: 0 10px;
+  text-align: center;
+}
+
+/* Layer Z-offsets */
+.layer-1 { animation: float-layer-1 5s ease-in-out infinite; border-color: rgba(255, 255, 255, 0.2); }
+.layer-2 { animation: float-layer-2 6s ease-in-out infinite; }
+.layer-3 { animation: float-layer-3 7s ease-in-out infinite; }
+.layer-4 { animation: float-layer-4 8s ease-in-out infinite; }
+
+/* Expansion on hover (pauses floating animation) */
+.bento-card:hover .layer-1 { animation-play-state: paused; transform: translateZ(54px); }
+.bento-card:hover .layer-2 { animation-play-state: paused; transform: translateZ(18px); }
+.bento-card:hover .layer-3 { animation-play-state: paused; transform: translateZ(-18px); }
+.bento-card:hover .layer-4 { animation-play-state: paused; transform: translateZ(-54px); }
+
+@keyframes float-layer-1 {
+  0% { transform: translateZ(36px); }
+  50% { transform: translateZ(42px); }
+  100% { transform: translateZ(36px); }
+}
+@keyframes float-layer-2 {
+  0% { transform: translateZ(12px); }
+  50% { transform: translateZ(18px); }
+  100% { transform: translateZ(12px); }
+}
+@keyframes float-layer-3 {
+  0% { transform: translateZ(-12px); }
+  50% { transform: translateZ(-6px); }
+  100% { transform: translateZ(-12px); }
+}
+@keyframes float-layer-4 {
+  0% { transform: translateZ(-36px); }
+  50% { transform: translateZ(-30px); }
+  100% { transform: translateZ(-36px); }
+}
+
+/* 5. Indian-Wide Radar Map Widget */
+.radar-map-widget {
+  height: 160px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  background: rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.radar-grid {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.radar-grid::before {
+  content: '';
+  position: absolute;
+  top: 15%;
+  left: 15%;
+  right: 15%;
+  bottom: 15%;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.radar-grid::after {
+  content: '';
+  position: absolute;
+  top: 35%;
+  left: 35%;
+  right: 35%;
+  bottom: 35%;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.radar-crosshair-h {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.radar-crosshair-v {
+  position: absolute;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.radar-sweep-hand {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  background: conic-gradient(from 0deg, var(--glow-1) 0deg, transparent 90deg);
+  border-radius: 0 100% 0 0;
+  transform-origin: bottom left;
+  top: 50%;
+  left: 50%;
+  transform: translate(-100%, -100%);
+  animation: radar-rotate 4s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes radar-rotate {
+  from { transform: translate(-100%, -100%) rotate(0deg); }
+  to { transform: translate(-100%, -100%) rotate(360deg); }
+}
+
+.radar-blip {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background-color: var(--text-primary);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--text-primary);
+}
+
+.blip-hyd {
+  top: 45%;
+  left: 45%;
+}
+
+.blip-blr {
+  top: 65%;
+  left: 50%;
+}
+
+.radar-blip-ripple {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  animation: blip-pulse-ripple 2s infinite ease-out;
+  transform: translate(-35%, -35%);
+}
+
+@keyframes blip-pulse-ripple {
+  0% { transform: scale(0.5); opacity: 1; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+.radar-coordinates {
+  position: absolute;
+  bottom: 12px;
+  left: 16px;
+  font-family: monospace;
+  font-size: 8px;
+  color: var(--text-muted);
+  line-height: 1.4;
+  z-index: 3;
+  text-align: left;
+}
+
+/* Light Theme Styling for Bento Widgets */
+.light-theme .bento-card {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+}
+
+.light-theme .telemetry-widget {
+  background: #ffffff;
+  border-color: var(--border-color);
+  color: #4b5563;
+}
+
+.light-theme .radar-map-widget {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+/* Responsive Bento Grid */
+@media (max-width: 900px) {
+  .why-nkxus-section {
+    padding: 60px 24px;
+  }
+  
+  .why-title {
+    font-size: 32px;
+  }
+
+  .card-scale, .card-security, .card-benchmarks, .card-fullstack, .card-radar {
+    grid-column: span 12;
+  }
+  
+  .radial-benchmarks-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+  }
+}
+
+@media (max-width: 500px) {
+  .radial-benchmarks-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Scroll Reveal Animations */
+.reveal-hidden {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered card reveals when parent section becomes visible */
+.why-nkxus-section.reveal-hidden .bento-card {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.why-nkxus-section.reveal-visible .bento-card {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 1s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+              background 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+              box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.why-nkxus-section.reveal-visible .card-scale { transition-delay: 0.05s; }
+.why-nkxus-section.reveal-visible .card-security { transition-delay: 0.18s; }
+.why-nkxus-section.reveal-visible .card-benchmarks { transition-delay: 0.3s; }
+.why-nkxus-section.reveal-visible .card-fullstack { transition-delay: 0.42s; }
+.why-nkxus-section.reveal-visible .card-radar { transition-delay: 0.54s; }

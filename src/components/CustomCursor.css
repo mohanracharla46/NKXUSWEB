@@ -1,0 +1,77 @@
+.custom-cursor-dot {
+  width: 6px;
+  height: 6px;
+  background-color: var(--text-primary);
+  border-radius: 50%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 99999;
+  will-change: transform;
+  mix-blend-mode: difference;
+  transition: transform 0.05s linear, opacity 0.3s ease;
+}
+
+.custom-cursor-ring {
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid var(--text-primary);
+  border-radius: 50%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin-top: -13px; /* centers it relative to dot (32px - 6px) / 2 = 13px offset */
+  margin-left: -13px;
+  pointer-events: none;
+  z-index: 99998;
+  will-change: transform;
+  mix-blend-mode: difference;
+  transition: 
+    transform 0.08s cubic-bezier(0.25, 1, 0.5, 1),
+    width 0.25s cubic-bezier(0.25, 1, 0.5, 1),
+    height 0.25s cubic-bezier(0.25, 1, 0.5, 1),
+    margin-top 0.25s cubic-bezier(0.25, 1, 0.5, 1),
+    margin-left 0.25s cubic-bezier(0.25, 1, 0.5, 1),
+    background-color 0.25s cubic-bezier(0.25, 1, 0.5, 1),
+    border-color 0.25s cubic-bezier(0.25, 1, 0.5, 1),
+    opacity 0.3s ease;
+}
+
+.custom-cursor-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 99997;
+}
+
+/* Hover expansion */
+.custom-cursor-ring.hovered {
+  width: 56px;
+  height: 56px;
+  margin-top: -25px; /* (56px - 6px) / 2 = 25px offset */
+  margin-left: -25px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Click implosion */
+.custom-cursor-ring.clicked {
+  transform: scale(0.6) !important;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Hide states */
+.custom-cursor-dot.hidden,
+.custom-cursor-ring.hidden {
+  opacity: 0;
+}
+
+/* Disable browser default cursor when active */
+html.custom-cursor-active,
+html.custom-cursor-active * {
+  cursor: none !important;
+}
