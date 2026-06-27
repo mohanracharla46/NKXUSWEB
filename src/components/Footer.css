@@ -45,6 +45,42 @@
   max-width: 320px;
 }
 
+.footer-socials {
+  display: flex;
+  gap: 12px;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  transition: var(--transition-smooth);
+}
+
+.social-link svg {
+  width: 18px;
+  height: 18px;
+}
+
+.social-link:hover {
+  color: var(--text-primary);
+  border-color: var(--border-hover);
+  transform: translateY(-2px);
+}
+
+.whatsapp-link:hover {
+  background: rgba(37, 211, 102, 0.1);
+  color: #25d366;
+  border-color: #25d366;
+  box-shadow: 0 0 12px rgba(37, 211, 102, 0.2);
+}
+
 .footer-links-col {
   display: flex;
   flex-direction: column;
