@@ -585,11 +585,11 @@ export default function BranchesPage() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '13px', color: 'var(--text-secondary)', marginTop: 'auto', paddingTop: '12px', borderTop: '1px solid rgba(255,255,255,0.04)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                   <Phone size={14} style={{ color: 'var(--text-muted)' }} />
-                  <span>{b.phone}</span>
+                  <span>+91 91604 42065 / +91 91604 42066</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                   <Mail size={14} style={{ color: 'var(--text-muted)' }} />
-                  <span>{b.email}</span>
+                  <span>info@nkxus.com / nkxus.com@gmail.com</span>
                 </div>
               </div>
             </div>

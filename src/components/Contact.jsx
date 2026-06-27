@@ -51,8 +51,17 @@ export default function Contact() {
               <Mail size={16} className="info-card-icon" />
               <div>
                 <h4>Partner Inquiries</h4>
-                <p>partners@nkxus.com</p>
-                <p style={{ marginTop: '2px', fontSize: '12px', color: 'var(--text-muted)' }}>General: info@nkxus.com</p>
+                <p>info@nkxus.com</p>
+                <p style={{ marginTop: '2px', fontSize: '12px', color: 'var(--text-muted)' }}>Backup: nkxus.com@gmail.com</p>
+              </div>
+            </div>
+
+            <div className="info-card glass-panel">
+              <Phone size={16} className="info-card-icon" />
+              <div>
+                <h4>Direct Support</h4>
+                <p>+91 91604 42065</p>
+                <p style={{ marginTop: '2px', fontSize: '12px', color: 'var(--text-muted)' }}>Support: +91 91604 42066</p>
               </div>
             </div>
 
