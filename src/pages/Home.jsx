@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Hero from '../components/Hero';
 import Stats from '../components/Stats';
 import './Home.css';
@@ -416,8 +417,42 @@ export default function Home() {
             </div>
           </div>
         </div>
+      {/* Branches Section */}
+      <AnimatedSection className="branches-section">
+        <div className="branches-container">
+          <span className="branches-badge">
+            <span className="branches-badge-line"></span> NETWORK NODES
+          </span>
+          <h2 className="branches-title">Our Branch Locations</h2>
+          <div className="branches-grid">
+            <div className="branch-card">
+              <span className="branch-coords">17.3850° N, 78.4867° E</span>
+              <h3 className="branch-city">Hyderabad</h3>
+              <p className="branch-role">Corporate HQ</p>
+            </div>
+            <div className="branch-card">
+              <span className="branch-coords">12.9716° N, 77.5946° E</span>
+              <h3 className="branch-city">Bangalore</h3>
+              <p className="branch-role">Operations & Eng Center</p>
+            </div>
+            <div className="branch-card">
+              <span className="branch-coords">19.0760° N, 72.8777° E</span>
+              <h3 className="branch-city">Mumbai</h3>
+              <p className="branch-role">Strategic Relations</p>
+            </div>
+            <div className="branch-card">
+              <span className="branch-coords">13.0827° N, 80.2707° E</span>
+              <h3 className="branch-city">Chennai</h3>
+              <p className="branch-role">Digital Innovation Lab</p>
+            </div>
+          </div>
+          <div className="branches-action-wrap">
+            <Link to="/branches" className="btn btn-secondary branches-btn">
+              More Branches
+            </Link>
+          </div>
+        </div>
       </AnimatedSection>
-
     </div>
   );
 }

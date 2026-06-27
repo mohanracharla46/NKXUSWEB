@@ -12,6 +12,7 @@ import TermsPage from './pages/TermsPage';
 import AboutPage from './pages/AboutPage';
 import BlogsPage from './pages/BlogsPage';
 import CareersPage from './pages/CareersPage';
+import BranchesPage from './pages/BranchesPage';
 
 export default function App() {
   return (
@@ -29,6 +30,7 @@ export default function App() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/blogs" element={<BlogsPage />} />
           <Route path="/careers" element={<CareersPage />} />
+          <Route path="/branches" element={<BranchesPage />} />
         </Routes>
       </main>
       <Footer />
