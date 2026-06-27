@@ -417,6 +417,8 @@ export default function Home() {
             </div>
           </div>
         </div>
+      </AnimatedSection>
+
       {/* Branches Section */}
       <AnimatedSection className="branches-section">
         <div className="branches-container">
