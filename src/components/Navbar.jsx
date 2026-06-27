@@ -46,6 +46,8 @@ export default function Navbar() {
     { label: 'Home', href: '/' },
     { label: 'Services', href: '/services', hasDropdown: true },
     { label: 'Portals', href: '/portals' },
+    { label: 'About Us', href: '/about' },
+    { label: 'Blogs', href: '/blogs' },
     { label: 'Contact', href: '/contact' },
   ];
 
