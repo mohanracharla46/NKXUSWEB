@@ -418,39 +418,6 @@ export default function Home() {
         </div>
       </AnimatedSection>
 
-      {/* Premium Trust Section */}
-      <AnimatedSection className="trust-summary-section" style={{
-        padding: '80px 24px 100px 24px',
-        textAlign: 'center',
-        background: 'var(--bg-primary)',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        gap: '40px'
-      }}>
-        <div style={{
-          maxWidth: '600px',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '16px'
-        }}>
-          <h3 style={{
-            fontSize: '13px',
-            fontWeight: '600',
-            letterSpacing: '0.15em',
-            color: 'var(--text-muted)',
-            fontFamily: 'var(--font-heading)'
-          }}>TRUSTED BY THE UNCOMPROMISING</h3>
-          <p style={{
-            fontSize: '15px',
-            color: 'var(--text-secondary)',
-            lineHeight: '1.6',
-            fontFamily: 'var(--font-body)'
-          }}>
-            From multi-million dollar corporations to independent creators, we build the digital frameworks that assert your market authority.
-          </p>
-        </div>
-      </AnimatedSection>
     </div>
   );
 }
