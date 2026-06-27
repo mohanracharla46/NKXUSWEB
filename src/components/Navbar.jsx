@@ -45,7 +45,7 @@ export default function Navbar() {
   const navLinks = [
     { label: 'Home', href: '/' },
     { label: 'Services', href: '/services', hasDropdown: true },
-    { label: 'Portals', href: '/portals' },
+    { label: 'Portfolio', href: '/portals' },
     { label: 'About', href: '/about' },
     { label: 'Blogs', href: '/blogs' },
     { label: 'Careers', href: '/careers' },
