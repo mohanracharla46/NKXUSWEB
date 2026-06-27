@@ -54,6 +54,7 @@ export default function Footer() {
               <li><Link to="/blogs">Journal</Link></li>
               <li><Link to="/careers">Careers</Link></li>
               <li><Link to="/contact">Contact</Link></li>
+              <li><Link to="/portals">Our Network</Link></li>
             </ul>
           </div>
 
