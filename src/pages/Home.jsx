@@ -215,6 +215,31 @@ export default function Home() {
       <Hero />
       <Stats />
 
+      {/* Our Clients Section */}
+      <AnimatedSection className="clients-section">
+        <div className="clients-container">
+          <span className="clients-badge">
+            <span className="clients-badge-line"></span> PRESTIGE PARTNERS
+          </span>
+          <h2 className="clients-title">Trusted by Industry Leaders</h2>
+          <div className="clients-ticker-wrap">
+            <div className="clients-ticker">
+              <div className="client-logo">AETHER CAPITAL</div>
+              <div className="client-logo">LUMINA LABS</div>
+              <div className="client-logo">ZENITH DIGITAL</div>
+              <div className="client-logo">AURELIA</div>
+              <div className="client-logo">VANGUARD GROUP</div>
+              {/* Duplicate for infinite loop */}
+              <div className="client-logo">AETHER CAPITAL</div>
+              <div className="client-logo">LUMINA LABS</div>
+              <div className="client-logo">ZENITH DIGITAL</div>
+              <div className="client-logo">AURELIA</div>
+              <div className="client-logo">VANGUARD GROUP</div>
+            </div>
+          </div>
+        </div>
+      </AnimatedSection>
+
       {/* Why NKXUS Bento Grid Section */}
       <AnimatedSection className="why-nkxus-section">
         <div className="why-nkxus-container">
@@ -334,6 +359,58 @@ export default function Home() {
                 <div className="radar-coordinates">
                   HYD: 17.3850° N, 78.4867° E<br />
                   BLR: 12.9716° N, 77.5946° E
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </AnimatedSection>
+
+
+      {/* Testimonials Section */}
+      <AnimatedSection className="testimonials-section">
+        <div className="testimonials-container">
+          <span className="testimonials-badge">
+            <span className="testimonials-badge-line"></span> CLIENT VERIFICATIONS
+          </span>
+          <h2 className="testimonials-title">System Authority Endorsements</h2>
+          <div className="testimonials-track-wrap">
+            <div className="testimonials-track">
+              <div className="testimonial-card">
+                <p className="testimonial-quote">
+                  "NKXUS delivered a complete redesign of our trading terminal UI. The system uptime and client onboarding metrics immediately spiked."
+                </p>
+                <div className="testimonial-author">
+                  <span className="author-name">Vikram Malhotra</span>
+                  <span className="author-role">VP of Product, Aether Capital</span>
+                </div>
+              </div>
+              <div className="testimonial-card">
+                <p className="testimonial-quote">
+                  "Their technical precision is absolute. The application lighthouse score sits at 100/100, and our brand authority has never been stronger."
+                </p>
+                <div className="testimonial-author">
+                  <span className="author-name">Ananya Sen</span>
+                  <span className="author-role">Director, Lumina Labs</span>
+                </div>
+              </div>
+              {/* Duplicate for infinite loop */}
+              <div className="testimonial-card">
+                <p className="testimonial-quote">
+                  "NKXUS delivered a complete redesign of our trading terminal UI. The system uptime and client onboarding metrics immediately spiked."
+                </p>
+                <div className="testimonial-author">
+                  <span className="author-name">Vikram Malhotra</span>
+                  <span className="author-role">VP of Product, Aether Capital</span>
+                </div>
+              </div>
+              <div className="testimonial-card">
+                <p className="testimonial-quote">
+                  "Their technical precision is absolute. The application lighthouse score sits at 100/100, and our brand authority has never been stronger."
+                </p>
+                <div className="testimonial-author">
+                  <span className="author-name">Ananya Sen</span>
+                  <span className="author-role">Director, Lumina Labs</span>
                 </div>
               </div>
             </div>
