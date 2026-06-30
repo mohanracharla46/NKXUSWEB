@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { apiGet, apiPost, externalUrl, mapJob } from '../lib/api';
+import Pagination from '../components/Pagination';
 import './CareersPage.css';
+
+const PAGE_SIZE = 5;
 
 const INITIAL_JOBS = [
   {
@@ -29,7 +33,10 @@ const INITIAL_JOBS = [
 ];
 
 export default function CareersPage() {
-  const [jobs, setJobs] = useState([]);
+  const [jobs, setJobs] = useState(INITIAL_JOBS);
+  const [loadingJobs, setLoadingJobs] = useState(true);
+  const [jobsError, setJobsError] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
   
   // Modal & Application Form State
   const [selectedJob, setSelectedJob] = useState(null);
@@ -39,21 +46,47 @@ export default function CareersPage() {
   const [applicantExperience, setApplicantExperience] = useState('1-3 Years');
   const [applicantSummary, setApplicantSummary] = useState('');
   const [resumeName, setResumeName] = useState('');
-  const [resumeData, setResumeData] = useState('');
+  const [resumeFile, setResumeFile] = useState(null);
   const [resumeError, setResumeError] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    
-    const savedJobs = localStorage.getItem('nkxus_jobs');
-    if (savedJobs) {
-      setJobs(JSON.parse(savedJobs));
-    } else {
-      localStorage.setItem('nkxus_jobs', JSON.stringify(INITIAL_JOBS));
-      setJobs(INITIAL_JOBS);
+
+    let cancelled = false;
+
+    async function loadJobs() {
+      try {
+        const data = await apiGet('/jobs');
+        if (!cancelled) {
+          setJobs(data.length ? data.map(mapJob) : INITIAL_JOBS);
+          setJobsError('');
+        }
+      } catch {
+        if (!cancelled) {
+          setJobs(INITIAL_JOBS);
+          setJobsError('Showing sample roles while the backend is unavailable.');
+        }
+      } finally {
+        if (!cancelled) setLoadingJobs(false);
+      }
     }
+
+    loadJobs();
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
+
+  useEffect(() => {
+    const totalPages = Math.max(1, Math.ceil(jobs.length / PAGE_SIZE));
+    setCurrentPage(page => Math.min(page, totalPages));
+  }, [jobs.length]);
+
+  const pagedJobs = jobs.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
 
   const handleApplyClick = (job) => {
     setSelectedJob(job);
@@ -68,9 +101,11 @@ export default function CareersPage() {
     setApplicantExperience('1-3 Years');
     setApplicantSummary('');
     setResumeName('');
-    setResumeData('');
+    setResumeFile(null);
     setResumeError('');
     setIsSubmitted(false);
+    setSubmitError('');
+    setIsSubmitting(false);
   };
 
   const handleFileChange = (e) => {
@@ -83,58 +118,43 @@ export default function CareersPage() {
       setResumeError('File size is too large (max 1.5MB). Please upload a smaller document.');
       e.target.value = ''; // Reset input
       setResumeName('');
-      setResumeData('');
+      setResumeFile(null);
       return;
     }
 
     setResumeName(file.name);
-
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      setResumeData(event.target.result); // Base64 data URL
-    };
-    reader.onerror = () => {
-      setResumeError('Error reading file. Please try another file.');
-    };
-    reader.readAsDataURL(file);
+    setResumeFile(file);
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    if (!applicantName || !applicantEmail || !applicantPortfolio || !resumeData) {
-      if (!resumeData) {
+    if (!applicantName || !applicantEmail || !applicantPortfolio || !resumeFile) {
+      if (!resumeFile) {
         setResumeError('Please upload your resume file.');
       }
       return;
     }
 
-    const newApplication = {
-      id: Date.now(),
-      jobId: selectedJob.id,
-      jobTitle: selectedJob.title,
-      name: applicantName,
-      email: applicantEmail,
-      link: applicantPortfolio,
-      experience: applicantExperience,
-      summary: applicantSummary,
-      resumeName: resumeName,
-      resumeData: resumeData,
-      date: new Date().toLocaleString('en-US', {
-        month: 'short',
-        day: 'numeric',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-      })
-    };
+    const formData = new FormData();
+    formData.append('position', selectedJob.title);
+    formData.append('full_name', applicantName);
+    formData.append('email', applicantEmail);
+    formData.append('portfolio_url', externalUrl(applicantPortfolio));
+    formData.append('experience', applicantExperience);
+    formData.append('resume', resumeFile);
+    formData.append('cover_letter', applicantSummary);
 
-    // Save application to localStorage
-    const savedApps = localStorage.getItem('nkxus_applications');
-    const currentApps = savedApps ? JSON.parse(savedApps) : [];
-    const updatedApps = [newApplication, ...currentApps];
-    localStorage.setItem('nkxus_applications', JSON.stringify(updatedApps));
+    setIsSubmitting(true);
+    setSubmitError('');
 
-    setIsSubmitted(true);
+    try {
+      await apiPost('/careers', formData);
+      setIsSubmitted(true);
+    } catch (err) {
+      setSubmitError(err.message || 'Unable to submit your application. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -180,6 +200,12 @@ export default function CareersPage() {
         </p>
       </header>
 
+      {jobsError && (
+        <p style={{ color: '#f59e0b', textAlign: 'center', fontSize: '14px', marginTop: '-48px', marginBottom: '40px' }}>
+          {jobsError}
+        </p>
+      )}
+
       {/* JobList */}
       <section style={{
         display: 'flex',
@@ -188,7 +214,9 @@ export default function CareersPage() {
         maxWidth: '800px',
         margin: '0 auto'
       }}>
-        {jobs.map(job => (
+        {loadingJobs ? (
+          <p style={{ color: 'var(--text-muted)', textAlign: 'center' }}>Loading open roles...</p>
+        ) : pagedJobs.map(job => (
           <div key={job.id} style={{
             padding: '32px',
             borderRadius: '16px',
@@ -238,6 +266,14 @@ export default function CareersPage() {
           </div>
         ))}
       </section>
+      {!loadingJobs && (
+        <Pagination
+          totalItems={jobs.length}
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+          pageSize={PAGE_SIZE}
+        />
+      )}
 
       {/* Application Form Modal */}
       {selectedJob && (
@@ -257,6 +293,7 @@ export default function CareersPage() {
                 </header>
 
                 <form onSubmit={handleFormSubmit}>
+                  {submitError && <p className="modal-error">{submitError}</p>}
                   <div className="app-form-group">
                     <label>Full Name *</label>
                     <input 
@@ -282,7 +319,7 @@ export default function CareersPage() {
                   <div className="app-form-group">
                     <label>Portfolio / LinkedIn URL *</label>
                     <input 
-                      type="url" 
+                      type="text" 
                       placeholder="e.g. https://portfolio.domain or linkedin.com/in/username"
                       value={applicantPortfolio}
                       onChange={(e) => setApplicantPortfolio(e.target.value)}
@@ -325,8 +362,8 @@ export default function CareersPage() {
                     ></textarea>
                   </div>
 
-                  <button type="submit" className="modal-submit-btn">
-                    Submit Application
+                  <button type="submit" className="modal-submit-btn" disabled={isSubmitting}>
+                    {isSubmitting ? 'Submitting...' : 'Submit Application'}
                   </button>
                 </form>
               </>

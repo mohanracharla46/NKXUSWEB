@@ -1,4 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { apiGet, mapBlog } from '../lib/api';
+import Pagination from '../components/Pagination';
+
+const PAGE_SIZE = 5;
 
 const MOCK_POSTS = [
   {
@@ -28,19 +32,46 @@ const MOCK_POSTS = [
 ];
 
 export default function BlogsPage() {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState(MOCK_POSTS);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    
-    const savedBlogs = localStorage.getItem('nkxus_blogs');
-    if (savedBlogs) {
-      setPosts(JSON.parse(savedBlogs));
-    } else {
-      localStorage.setItem('nkxus_blogs', JSON.stringify(MOCK_POSTS));
-      setPosts(MOCK_POSTS);
+
+    let cancelled = false;
+
+    async function loadBlogs() {
+      try {
+        const data = await apiGet('/blogs');
+        if (!cancelled) {
+          setPosts(data.length ? data.map(mapBlog) : MOCK_POSTS);
+          setError('');
+        }
+      } catch {
+        if (!cancelled) {
+          setPosts(MOCK_POSTS);
+          setError('Showing sample journal entries while the backend is unavailable.');
+        }
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
     }
+
+    loadBlogs();
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
+
+  useEffect(() => {
+    const totalPages = Math.max(1, Math.ceil(posts.length / PAGE_SIZE));
+    setCurrentPage(page => Math.min(page, totalPages));
+  }, [posts.length]);
+
+  const pagedPosts = posts.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
 
   return (
     <div style={{
@@ -85,13 +116,25 @@ export default function BlogsPage() {
         </p>
       </header>
 
+      {error && (
+        <p style={{
+          maxWidth: '700px',
+          margin: '-40px auto 40px auto',
+          color: '#f59e0b',
+          textAlign: 'center',
+          fontSize: '14px'
+        }}>{error}</p>
+      )}
+
       {/* Grid */}
       <section style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
         gap: '32px'
       }}>
-        {posts.map(post => (
+        {loading ? (
+          <p style={{ color: 'var(--text-muted)', gridColumn: '1 / -1', textAlign: 'center' }}>Loading journal entries...</p>
+        ) : pagedPosts.map(post => (
           <article key={post.id} style={{
             padding: '32px',
             borderRadius: '16px',
@@ -112,6 +155,20 @@ export default function BlogsPage() {
             e.currentTarget.style.borderColor = 'var(--border-color)';
             e.currentTarget.style.transform = 'none';
           }}>
+            {post.image && (
+              <img
+                src={post.image}
+                alt={post.title}
+                style={{
+                  width: '100%',
+                  aspectRatio: '16 / 9',
+                  objectFit: 'cover',
+                  borderRadius: '10px',
+                  border: '1px solid var(--border-color)',
+                  marginBottom: '24px'
+                }}
+              />
+            )}
             <div>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px', fontSize: '11px', color: 'var(--text-muted)', fontWeight: '500' }}>
                 <span>{(post.category || 'Insight').toUpperCase()}</span>
@@ -149,6 +206,14 @@ export default function BlogsPage() {
           </article>
         ))}
       </section>
+      {!loading && (
+        <Pagination
+          totalItems={posts.length}
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+          pageSize={PAGE_SIZE}
+        />
+      )}
     </div>
   );
 }

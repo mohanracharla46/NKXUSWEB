@@ -1,23 +1,30 @@
 import React, { useState } from 'react';
 import { Send, CheckCircle2, Mail, Phone, Clock, MapPin } from 'lucide-react';
+import { apiPost } from '../lib/api';
 import './Contact.css';
 
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!form.name || !form.email) return;
+    if (!form.name || !form.email || !form.message) return;
 
     setSubmitting(true);
-    // Simulate API call
-    setTimeout(() => {
+    setError('');
+
+    try {
+      await apiPost('/contact', form);
       setSubmitting(false);
       setSubmitted(true);
       setForm({ name: '', email: '', message: '' });
-    }, 1500);
+    } catch (err) {
+      setSubmitting(false);
+      setError(err.message || 'Unable to submit your request. Please try again.');
+    }
   };
 
   const handleChange = (e) => {
@@ -90,6 +97,7 @@ export default function Contact() {
           ) : (
             <form className="contact-form glass-panel" onSubmit={handleSubmit}>
               <h3 className="form-heading">Initialize Alignment</h3>
+              {error && <p className="form-error">{error}</p>}
               <div className="form-group">
                 <input
                   type="text"
@@ -131,6 +139,7 @@ export default function Contact() {
                   placeholder=" "
                   className="form-input form-textarea"
                   rows={4}
+                  required
                 ></textarea>
                 <label htmlFor="message" className="form-label">
                   Project goals & constraints

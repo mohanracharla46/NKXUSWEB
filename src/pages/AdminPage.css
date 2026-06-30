@@ -1,6 +1,6 @@
 .admin-page-container {
   padding: 160px 24px 100px 24px;
-  maxWidth: 1200px;
+  max-width: 1200px;
   margin: 0 auto;
   font-family: var(--font-body);
   color: var(--text-primary);
@@ -42,10 +42,17 @@
 /* Tabs */
 .admin-tabs {
   display: flex;
+  flex-wrap: wrap;
   gap: 16px;
   border-bottom: 1px solid var(--border-color);
   padding-bottom: 16px;
   margin-bottom: 40px;
+}
+
+.admin-loading,
+.field-help {
+  color: var(--text-muted);
+  font-size: 13px;
 }
 
 .admin-tab-btn {
@@ -213,6 +220,15 @@
   transition: border-color 0.3s ease;
 }
 
+.blog-list-thumb {
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 1px solid var(--border-color);
+  flex-shrink: 0;
+}
+
 .list-item:hover {
   border-color: var(--border-hover);
 }
@@ -337,6 +353,7 @@
 
 .app-main-details {
   flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -376,8 +393,8 @@
 
 .app-info-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 16px;
+  grid-template-columns: minmax(160px, 1fr) minmax(220px, 1.4fr) minmax(120px, 0.7fr) minmax(200px, 1.3fr);
+  gap: 20px;
   margin-top: 12px;
   margin-bottom: 8px;
   width: 100%;
@@ -387,6 +404,7 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
+  min-width: 0;
 }
 
 .app-info-label {
@@ -407,7 +425,13 @@
   font-size: 13px;
   text-decoration: none;
   font-weight: 600;
-  display: inline-flex;
+  display: -webkit-box;
+  max-width: 100%;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
   align-items: center;
   transition: opacity 0.2s ease;
 }
@@ -421,6 +445,22 @@
   .app-date-tag {
     margin-left: 0;
     width: 100%;
+  }
+}
+
+@media (max-width: 1100px) {
+  .app-info-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 680px) {
+  .application-item {
+    flex-direction: column;
+  }
+
+  .app-info-grid {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -492,8 +532,15 @@
 
 .app-link {
   color: var(--text-primary);
+  display: -webkit-box;
+  max-width: 100%;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  word-break: break-word;
   text-decoration: underline;
   transition: opacity 0.2s ease;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .app-link:hover {
