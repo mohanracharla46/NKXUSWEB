@@ -4,6 +4,18 @@ import Hero from '../components/Hero';
 import Stats from '../components/Stats';
 import './Home.css';
 
+const CLIENT_LOGOS = [
+  { name: 'Aether Capital', path: '/assets/client1.png' },
+  { name: 'Lumina Labs', path: '/assets/client2.svg' },
+  { name: 'Zenith Digital', path: '/assets/client3.webp' },
+  { name: 'Aurelia', path: '/assets/client4.jpg' },
+  { name: 'Vanguard Group', path: '/assets/client5.webp' },
+  { name: 'Quantum Analytics', path: '/assets/client6.webp' },
+  { name: 'Hyperion Dev', path: '/assets/client7.png' },
+  { name: 'Apex Corp', path: '/assets/client8.png' },
+  { name: 'Nexus Solutions', path: '/assets/client10.png' }
+];
+
 function AnimatedSection({ children, className, style }) {
   const [isVisible, setIsVisible] = useState(false);
   const domRef = useRef();
@@ -225,17 +237,16 @@ export default function Home() {
           <h2 className="clients-title">Trusted by Industry Leaders</h2>
           <div className="clients-ticker-wrap">
             <div className="clients-ticker">
-              <div className="client-logo">AETHER CAPITAL</div>
-              <div className="client-logo">LUMINA LABS</div>
-              <div className="client-logo">ZENITH DIGITAL</div>
-              <div className="client-logo">AURELIA</div>
-              <div className="client-logo">VANGUARD GROUP</div>
-              {/* Duplicate for infinite loop */}
-              <div className="client-logo">AETHER CAPITAL</div>
-              <div className="client-logo">LUMINA LABS</div>
-              <div className="client-logo">ZENITH DIGITAL</div>
-              <div className="client-logo">AURELIA</div>
-              <div className="client-logo">VANGUARD GROUP</div>
+              {CLIENT_LOGOS.map((client, index) => (
+                <div className="client-logo" key={`logo-1-${index}`}>
+                  <img src={client.path} alt={client.name} title={client.name} />
+                </div>
+              ))}
+              {CLIENT_LOGOS.map((client, index) => (
+                <div className="client-logo" key={`logo-2-${index}`}>
+                  <img src={client.path} alt={client.name} title={client.name} />
+                </div>
+              ))}
             </div>
           </div>
         </div>

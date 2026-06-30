@@ -660,19 +660,64 @@
 }
 
 .client-logo {
-  font-family: var(--font-heading);
-  font-size: 16px;
-  font-weight: 800;
-  letter-spacing: 0.15em;
-  color: var(--text-muted);
-  opacity: 0.5;
-  transition: opacity 0.3s ease, color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: default;
+  height: 45px;
 }
 
-.client-logo:hover {
-  opacity: 1;
-  color: var(--text-primary);
+.client-logo img {
+  height: 38px;
+  max-width: 150px;
+  width: auto;
+  object-fit: contain;
+  opacity: 0.65;
+  transition: opacity 0.3s ease;
+}
+
+/* --- Dark Theme (Default) --- */
+/* client1 (black logo, transparent) -> invert to make it white */
+.client-logo img[src*="client1"] {
+  filter: invert(1);
+}
+
+/* client4 (white background, colored logo) -> invert to make background black and blend in */
+.client-logo img[src*="client4"] {
+  filter: invert(1);
+}
+
+/* client2, client3, client5, client6 (colored transparent) -> slight brightness/desaturation for elegance */
+.client-logo img[src*="client2"],
+.client-logo img[src*="client3"],
+.client-logo img[src*="client5"],
+.client-logo img[src*="client6"] {
+  filter: brightness(1.2) contrast(0.9);
+}
+
+/* client7, client8, client10 are white, so they are perfect in dark mode with default opacity */
+
+
+/* --- Light Theme Overrides --- */
+:root.light-theme .client-logo img {
+  filter: none;
+}
+
+/* client1 (black logo, transparent) -> keep black */
+:root.light-theme .client-logo img[src*="client1"] {
+  filter: none;
+}
+
+/* client4 (white background, colored logo) -> keep white background */
+:root.light-theme .client-logo img[src*="client4"] {
+  filter: none;
+}
+
+/* client7, client8, client10 (white logos) -> invert to make them black/visible */
+:root.light-theme .client-logo img[src*="client7"],
+:root.light-theme .client-logo img[src*="client8"],
+:root.light-theme .client-logo img[src*="client10"] {
+  filter: invert(1);
 }
 
 /* Testimonials Section Styling */

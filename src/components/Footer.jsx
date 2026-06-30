@@ -64,6 +64,7 @@ export default function Footer() {
             <ul className="footer-links-list">
               <li><Link to="/privacy">Privacy Policy</Link></li>
               <li><Link to="/terms">Terms & Conditions</Link></li>
+              <li><Link to="/admin">Admin Console</Link></li>
             </ul>
           </div>
         </div>

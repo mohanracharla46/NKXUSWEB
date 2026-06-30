@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const MOCK_POSTS = [
   {
@@ -28,8 +28,18 @@ const MOCK_POSTS = [
 ];
 
 export default function BlogsPage() {
+  const [posts, setPosts] = useState([]);
+
   useEffect(() => {
     window.scrollTo(0, 0);
+    
+    const savedBlogs = localStorage.getItem('nkxus_blogs');
+    if (savedBlogs) {
+      setPosts(JSON.parse(savedBlogs));
+    } else {
+      localStorage.setItem('nkxus_blogs', JSON.stringify(MOCK_POSTS));
+      setPosts(MOCK_POSTS);
+    }
   }, []);
 
   return (
@@ -81,7 +91,7 @@ export default function BlogsPage() {
         gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
         gap: '32px'
       }}>
-        {MOCK_POSTS.map(post => (
+        {posts.map(post => (
           <article key={post.id} style={{
             padding: '32px',
             borderRadius: '16px',
@@ -104,8 +114,8 @@ export default function BlogsPage() {
           }}>
             <div>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px', fontSize: '11px', color: 'var(--text-muted)', fontWeight: '500' }}>
-                <span>{post.category.toUpperCase()}</span>
-                <span>{post.date}</span>
+                <span>{(post.category || 'Insight').toUpperCase()}</span>
+                <span>{post.date || 'June 30, 2026'}</span>
               </div>
               <h3 style={{
                 fontFamily: 'var(--font-heading)',
@@ -122,12 +132,20 @@ export default function BlogsPage() {
                 marginBottom: '24px'
               }}>{post.desc}</p>
             </div>
-            <span style={{
-              fontSize: '12px',
-              fontWeight: '600',
-              color: 'var(--text-primary)',
-              letterSpacing: '0.05em'
-            }}>{post.readTime}</span>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '12px' }}>
+              <span style={{
+                fontWeight: '600',
+                color: 'var(--text-primary)',
+                letterSpacing: '0.05em'
+              }}>{post.readTime || '3 min read'}</span>
+              {post.writer && (
+                <span style={{
+                  color: 'var(--text-muted)',
+                  fontSize: '11px',
+                  fontWeight: '500'
+                }}>By {post.writer}</span>
+              )}
+            </div>
           </article>
         ))}
       </section>

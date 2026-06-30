@@ -14,6 +14,7 @@ import BlogsPage from './pages/BlogsPage';
 import CareersPage from './pages/CareersPage';
 import BranchesPage from './pages/BranchesPage';
 import PortfolioPage from './pages/PortfolioPage';
+import AdminPage from './pages/AdminPage';
 
 export default function App() {
   return (
@@ -33,6 +34,7 @@ export default function App() {
           <Route path="/blogs" element={<BlogsPage />} />
           <Route path="/careers" element={<CareersPage />} />
           <Route path="/branches" element={<BranchesPage />} />
+          <Route path="/admin" element={<AdminPage />} />
         </Routes>
       </main>
       <Footer />
